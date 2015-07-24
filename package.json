@@ -1,0 +1,16 @@
+{
+  "name": "model-thin",
+  "version": "0.1.1",
+  "description": "A super-slim model layer.",
+  "author": {
+    "name": "David Rekow",
+    "email": "d@davidrekow.com",
+    "url": "http://github.com/davidrekow"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/davidrekow/model-thin.git"
+  },
+  "bugs": "https://github.com/davidrekow/model-thin/issues",
+  "license": "MIT",
+}
