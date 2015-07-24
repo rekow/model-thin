@@ -3,16 +3,24 @@
  * @author David Rekow <d@davidrekow.com>
  */
 
-
 /**
  * @constructor
+ * @param {Object.<string, ?>=} props
  */
-var Model = function () {
+var Model = function (props) {
   /**
    * @private
    * @type {Object.<string, ?>}
    */
   this._prop = {};
+
+  if (props) {
+    for (var key in props) {
+      if (props.hasOwnProperty(key)) {
+        this[key] = props[key];
+      }
+    }
+  }
 };
 
 /**
