@@ -32,9 +32,9 @@ var Model = function (props) {
 
   /**
    * @private
-   * @type {number}
+   * @type {?number}
    */
-  this._mid = ++this.constructor.count;
+  this._mid = null;
 
   if (props) {
     for (var key in props) {
@@ -52,12 +52,6 @@ var Model = function (props) {
  * @return {?Adapter}
  */
 Model.adapters = require('./adapter');
-
-/**
- * @static
- * @type {number}
- */
-Model.count = 0;
 
 /**
  * @static
@@ -80,7 +74,6 @@ Model.create = function (kind, properties, parent) {
 
   ctor.defineProperty = Model.defineProperty;
   ctor.useAdapter = Model.useAdapter;
-  ctor.count = 0;
 
   for (var key in properties) {
     if (properties.hasOwnProperty(key)) {

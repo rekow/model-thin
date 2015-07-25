@@ -3,7 +3,8 @@
  * @author David Rekow <d@davidrekow.com>
  */
 
-var db = {};
+var db = {},
+  ids = {};
 
 module.exports = {
   /**
@@ -20,9 +21,15 @@ module.exports = {
    * @param {function(?Error, ?Model)=} cb
    */
   persist: function (model, cb) {
-    if (model) {
-      db[this.key(model)] = model;
+    if (!model.id()) {
+      if (!ids[model.kind]) {
+        ids[model.kind] = 0;
+      }
+
+      model.id(++ids[model.kind]);
     }
+
+    db[this.key(model)] = model;
 
     if (cb) {
       cb();
