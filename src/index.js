@@ -32,7 +32,7 @@ var Model = function (props) {
 
   /**
    * @private
-   * @type {?number}
+   * @type {?(number|string)}
    */
   this._mid = null;
 
@@ -149,11 +149,11 @@ Model.useAdapter = function (adapter) {
 };
 
 /**
- * @param {number=} newId
- * @return {number}
+ * @param {(number|string)=} newId
+ * @return {?(number|string)}
  */
 Model.prototype.id = function (newId) {
-  if (typeof newId === 'number') {
+  if (newId) {
     this._mid = newId;
   }
 
