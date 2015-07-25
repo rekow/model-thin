@@ -20,7 +20,7 @@ install with `npm install model-thin`, or add to your project dependencies:
 
 ```json
 dependencies: {
-  "model-thin": "^0.1.5"
+  "model-thin": "^0.1.6"
 }
 ```
 
@@ -129,8 +129,9 @@ The [in-memory](https://github.com/davidrekow/model-thin/blob/master/src/adapter
 Because it's seemingly impossible to find a simple, unopinionated, framework-and-storage-agnostic model layer for Node that also offers object property syntax.
 
 ## in progress:
-- set adapter by name, with fallbacks if not found
+- set adapter by name with fallbacks if not found (currently keeps default and warns in console)
 - collections
 - queries
 - required and indexed properties
+- validations
 - adapters: google cloud datastore, redis, mongodb, postgresql

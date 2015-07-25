@@ -1,6 +1,6 @@
 {
   "name": "model-thin",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "A super-slim model layer.",
   "keywords": [
     "model",
@@ -15,7 +15,7 @@
   },
   "main": "src/index.js",
   "scripts": {
-    "build": "node build.js"
+    "demo": "node example.js"
   },
   "repository": {
     "type": "git",

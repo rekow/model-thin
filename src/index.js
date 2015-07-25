@@ -47,6 +47,14 @@ var Model = function (props) {
 
 /**
  * @static
+ * @param {string} name
+ * @param {Adapter=} adapter
+ * @return {?Adapter}
+ */
+Model.adapters = require('./adapter');
+
+/**
+ * @static
  * @type {number}
  */
 Model.count = 0;
@@ -131,12 +139,20 @@ Model.isSubclass = function (cls) {
 
 /**
  * @static
- * @param {Adapter} adapter
+ * @param {(string|Adapter)} adapter
  * @this {function(new:Model)}
- * @TODO handle adapter name instead of just implemented adapter
+ * @TODO fallbacks
  */
 Model.useAdapter = function (adapter) {
-  this.prototype.adapter = adapter;
+  if (typeof adapter === 'string') {
+    adapter = Model.adapters(adapter);
+  }
+
+  if (adapter) {
+    this.prototype.adapter = adapter;
+  } else {
+    console.warn('[model-thin] Error using adapter: adapter not found or provided.');
+  }
 };
 
 /**
