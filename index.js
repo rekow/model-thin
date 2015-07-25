@@ -4,6 +4,22 @@
  */
 
 /**
+ * @private
+ * @param {function()} fn
+ * @return {boolean}
+ */
+var isMethod = function (fn) {
+  return (typeof fn === 'function' &&
+    fn !== Boolean &&
+    fn !== Number &&
+    fn !== String &&
+    fn !== Object &&
+    fn !== Array &&
+    fn !== Date &&
+    !Model.isSubclass(fn));
+}
+
+/**
  * @constructor
  * @param {Object.<string, ?>=} props
  */
@@ -60,6 +76,10 @@ Model.create = function (kind, props, parent) {
  * @this {function(new:Model)}
  */
 Model.defineProperty = function (key, type) {
+  if (isMethod(type)) {
+    return this.prototype[key] = type;
+  }
+
   Object.defineProperty(this.prototype, key, {
     enumerable: true,
     get: function () {
@@ -67,7 +87,7 @@ Model.defineProperty = function (key, type) {
     },
     set: function (val) {
       if (val !== null && val.constructor !== this.props[key]) {
-        console.warn('Tried to set invalid property type, ignoring.');
+        console.warn('[model-thin]: Tried to set invalid property type for %s, ignoring.', key);
       } else {
         this._prop[key] = val;
       };
@@ -75,6 +95,24 @@ Model.defineProperty = function (key, type) {
   });
 
   this.prototype.props[key] = type;
+};
+
+/**
+ * @static
+ * @param {function(new:?)} cls
+ * @return {boolean}
+ */
+Model.isSubclass = function (cls) {
+  if (typeof cls === 'function') {
+    while (cls !== Object) {
+      cls = Object.getPrototypeOf(cls.prototype).constructor;
+      if (cls === Model) {
+        return true;
+      }
+    }
+  }
+
+  return false;
 };
 
 /**
