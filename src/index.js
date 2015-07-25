@@ -156,9 +156,14 @@ Model.useAdapter = function (adapter) {
 };
 
 /**
+ * @param {number=} newId
  * @return {number}
  */
-Model.prototype.id = function () {
+Model.prototype.id = function (newId) {
+  if (typeof newId === 'number') {
+    this._mid = newId;
+  }
+
   return this._mid;
 };
 

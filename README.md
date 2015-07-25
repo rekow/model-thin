@@ -113,7 +113,7 @@ or at the level of individual subclasses:
 Person.useAdapter(adapter);
 ```
 
-A storage adapter is any object that fulfills the [`Adapter` interface](https://github.com/davidrekow/model-thin/blob/master/src/adapter.js#L6:L46), and should handle:
+A storage adapter is any object that fulfills the [`Adapter` interface](https://github.com/davidrekow/model-thin/blob/master/src/adapter.js#L6:L42), and should handle:
 
 - keying models
 - connecting and disconnecting

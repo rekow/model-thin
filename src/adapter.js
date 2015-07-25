@@ -10,10 +10,16 @@
  */
 
 /**
+ * Configures the current Adapter with a passed config object.
+ *
+ * @function Adapter#configure
+ * @param {Object}
+ */
+
+/**
  * Returns a key string for the passed model.
  *
- * @function
- * @name Adapter#key
+ * @function Adapter#key
  * @param {Model}
  * @return {string}
  */
@@ -21,8 +27,7 @@
 /**
  * Persists the passed model to underlying storage.
  *
- * @function
- * @name Adapter#persist
+ * @function Adapter#persist
  * @param {Model} model
  * @param {function(?Error, ?Model)=} cb
  */
@@ -30,8 +35,7 @@
 /**
  * Deletes the passed model/key from underlying storage.
  *
- * @function
- * @name Adapter#remove
+ * @function Adapter#remove
  * @param {(Model|string)} modelOrKey
  * @param {function(?Error, ?Model)=} cb
  */
@@ -39,8 +43,7 @@
 /**
  * Retrieves a model from underlying storage and passes it to the callback.
  *
- * @function
- * @name Adapter#retrieve
+ * @function Adapter#retrieve
  * @param {(Model|string)} modelOrKey
  * @param {function(?Error, ?Model)} cb
  */
