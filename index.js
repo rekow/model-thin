@@ -42,12 +42,12 @@ var Model = function (props) {
 /**
  * @static
  * @param {string} kind
- * @param {Object.<string, function(new:?)>} props
+ * @param {Object.<string, function(new:?)>} properties
  * @param {function(new:Model)=} parent
  * @return {function(new:Model)}
  */
-Model.create = function (kind, props, parent) {
-  parent = parent || Model;
+Model.create = function (kind, properties, parent) {
+  parent = parent && Model.isSubclass(parent) ? parent : Model;
 
   var ctor = function () {
     parent.apply(this, arguments);
@@ -60,9 +60,9 @@ Model.create = function (kind, props, parent) {
 
   ctor.defineProperty = Model.defineProperty;
 
-  for (var key in props) {
-    if (props.hasOwnProperty(key)) {
-      ctor.defineProperty(key, props[key]);
+  for (var key in properties) {
+    if (properties.hasOwnProperty(key)) {
+      ctor.defineProperty(key, properties[key]);
     }
   }
 
@@ -71,30 +71,30 @@ Model.create = function (kind, props, parent) {
 
 /**
  * @static
- * @param {string} key
+ * @param {string} name
  * @param {function(new:?)} type
  * @this {function(new:Model)}
  */
-Model.defineProperty = function (key, type) {
+Model.defineProperty = function (name, type) {
   if (isMethod(type)) {
-    return this.prototype[key] = type;
+    return this.prototype[name] = type;
   }
 
-  Object.defineProperty(this.prototype, key, {
+  Object.defineProperty(this.prototype, name, {
     enumerable: true,
     get: function () {
-      return this._prop[key];
+      return this._prop[name];
     },
     set: function (val) {
-      if (val !== null && val.constructor !== this.props[key]) {
-        console.warn('[model-thin]: Tried to set invalid property type for %s, ignoring.', key);
+      if (val !== null && val.constructor !== this.props[name]) {
+        console.warn('[model-thin]: Tried to set invalid property type for %s, ignoring.', name);
       } else {
-        this._prop[key] = val;
+        this._prop[name] = val;
       };
     }
   });
 
-  this.prototype.props[key] = type;
+  this.prototype.props[name] = type;
 };
 
 /**
