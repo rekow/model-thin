@@ -2,7 +2,7 @@
  * @file Super simple example.
  */
 
-var Model = require('./index');
+var Model = require('./src');
 
 var Person = Model.create('Person', {
   name: String,

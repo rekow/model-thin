@@ -1,6 +1,6 @@
 {
   "name": "model-thin",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "A super-slim model layer.",
   "keywords": [
     "model",
@@ -13,6 +13,7 @@
     "email": "d@davidrekow.com",
     "url": "http://github.com/davidrekow"
   },
+  "main": "src/index.js",
   "scripts": {
     "build": "node build.js"
   },

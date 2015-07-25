@@ -17,7 +17,7 @@ var isMethod = function (fn) {
     fn !== Array &&
     fn !== Date &&
     !Model.isSubclass(fn));
-}
+};
 
 /**
  * @constructor
@@ -30,6 +30,12 @@ var Model = function (props) {
    */
   this._prop = {};
 
+  /**
+   * @private
+   * @type {number}
+   */
+  this._mid = ++this.constructor.count;
+
   if (props) {
     for (var key in props) {
       if (props.hasOwnProperty(key)) {
@@ -38,6 +44,12 @@ var Model = function (props) {
     }
   }
 };
+
+/**
+ * @static
+ * @type {number}
+ */
+Model.count = 0;
 
 /**
  * @static
@@ -59,6 +71,8 @@ Model.create = function (kind, properties, parent) {
   ctor.prototype.props = {};
 
   ctor.defineProperty = Model.defineProperty;
+  ctor.useAdapter = Model.useAdapter;
+  ctor.count = 0;
 
   for (var key in properties) {
     if (properties.hasOwnProperty(key)) {
@@ -116,6 +130,50 @@ Model.isSubclass = function (cls) {
 };
 
 /**
+ * @static
+ * @param {Adapter=} adapter
+ * @this {function(new:Model)}
+ * @TODO handle anonymous runtime-defined adapter
+ */
+Model.useAdapter = function (adapter) {
+  this.prototype.adapter = adapter;
+};
+
+/**
+ * @return {number}
+ */
+Model.prototype.id = function () {
+  return this._mid;
+};
+
+Model.prototype.del = function () {
+  if (this.adapter) {
+    this.adapter.remove(this);
+  } else {
+    console.warn('[model-thin] No storage specified for kind ' + this.kind + '.')
+  }
+};
+
+/**
+ * @param {function(?Error, ?Model)} cb
+ */
+Model.prototype.get = function (cb) {
+  if (this.adapter) {
+    this.adapter.retrieve(this, cb);
+  } else {
+    cb(new Error('No storage specified for kind ' + this.kind + '.'));
+  }
+};
+
+Model.prototype.put = function () {
+  if (this.adapter && this.validate()) {
+    this.adapter.persist(this);
+  } else {
+    console.warn('[model-thin] No storage specified for kind ' + this.kind + '.')
+  }
+};
+
+/**
  * @return {boolean}
  * @TODO model-level validations (required, indexed etc).
  */
@@ -123,5 +181,6 @@ Model.prototype.validate = function () {
   return true;
 };
 
+Model.useAdapter(require('./adapters/memory')); // Use in-memory adapter by default.
 
 module.exports = Model;
