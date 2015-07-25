@@ -20,7 +20,7 @@ var isMethod = function (fn) {
 };
 
 /**
- * @constructor
+ * @class
  * @param {Object.<string, ?>=} props
  */
 var Model = function (props) {
@@ -133,7 +133,7 @@ Model.isSubclass = function (cls) {
  * @static
  * @param {Adapter=} adapter
  * @this {function(new:Model)}
- * @TODO handle anonymous runtime-defined adapter
+ * @TODO handle adapter name instead of just implemented adapter
  */
 Model.useAdapter = function (adapter) {
   this.prototype.adapter = adapter;

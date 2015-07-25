@@ -4,16 +4,48 @@
  */
 
 /**
- * @typedef {Object} Adapter
- * @property {function(Model)} persist - Persists the passed model to underlying storage.
- * @property {function((Model|string))} remove - Deletes the passed model/key from storage.
- * @property {function((Model|string), function(?Error, ?Model))} retrieve - Retrieve a model by key
- *    from the underlying storage and pass to callback. If passed a model, will first call `key()`.
- * @property {function(Model):string} key - Returns a key string for the passed model.
+ * Interface for abstracting model interaction with a persistence layer.
+ *
+ * @interface {Object} Adapter
  */
-var Adapter = {};
 
-var adapter = {};
+/**
+ * Returns a key string for the passed model.
+ *
+ * @function
+ * @name Adapter#key
+ * @param {Model}
+ * @return {string}
+ */
+
+/**
+ * Persists the passed model to underlying storage.
+ *
+ * @function
+ * @name Adapter#persist
+ * @param {Model}
+ * @param {function(?Error, ?Model)=}
+ */
+
+/**
+ * Deletes the passed model/key from underlying storage.
+ *
+ * @function
+ * @name Adapter#remove
+ * @param {(Model|string)}
+ * @param {function(?Error, ?Model)=}
+ */
+
+/**
+ * Retrieves a model from underlying storage and passes it to the callback.
+ *
+ * @function
+ * @name Adapter#retrieve
+ * @param {(Model|string)}
+ * @param {function(?Error, ?Model)}
+ */
+
+var adapters = /** @type {Object.<string, Adapter>} */ ({});
 
 /**
  * @param {string} name
@@ -22,8 +54,8 @@ var adapter = {};
  */
 module.exports = function (name, adapter) {
   if (adapter) {
-    adapter[name] = adapter;
+    adapters[name] = adapter;
   }
 
-  return adapter[name];
+  return adapters[name];
 };

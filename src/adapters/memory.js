@@ -17,13 +17,18 @@ module.exports = adapter('memory', {
 
   /**
    * @param {(Model|string)} modelOrKey
+   * @param {function(?Error, ?Model)=} cb
    */
-  remove: function (modelOrKey) {
+  remove: function (modelOrKey, cb) {
     if (typeof modelOrKey !== 'string') {
       modelOrKey = this.key(modelOrKey);
     }
 
     db[modelOrKey] = null;
+
+    if (cb) {
+      cb();
+    }
   },
 
   /**
@@ -40,10 +45,15 @@ module.exports = adapter('memory', {
 
   /**
    * @param {Model}
+   * @param {function(?Error, ?Model)=} cb
    */
-  persist: function (model) {
+  persist: function (model, cb) {
     if (model) {
       db[this.key(model)] = model;
+    }
+
+    if (cb) {
+      cb();
     }
   }
 });

@@ -89,13 +89,48 @@ var daughter = new Person({
 });
 ```
 
+### storing models
+
+Interacting with storage is abstracted into a common-sense set of async methods on every `Model` instance:
+
+- `model.get(callback)`
+- `model.put([callback])`
+- `model.del([callback])`
+
+Callbacks will be invoked with the server response after a successful or failed operation. Callback params should follow the idiomatic `(err, model)` schema.
+
+Persistence is handled via an extensible storage adapter system and can be configured globally:
+
+```javascript
+// Sets the adapter for all model types
+Model.useAdapter(adapter);
+```
+
+or at the level of individual subclasses:
+
+```javascript
+// Sets the adapter for all models of type Person
+Person.useAdapter(adapter);
+```
+
+A storage adapter is any object that fulfills the [`Adapter` interface](https://github.com/davidrekow/model-thin/blob/master/src/adapter.js#L9), and should handle:
+
+- keying models
+- connecting and disconnecting
+- CRUD
+- querying (not yet supported)
+
+Custom storage adapters should ideally be published as a separate NPM module with the naming schema `model-thin-<db>`, so they can be managed as package-level dependencies.
+
+The [in-memory](https://github.com/davidrekow/model-thin/blob/master/src/adapters/memory.js) adapter is the only built-in storage provided, and is selected by default.
+
 ## why?
 
 Because it's seemingly impossible to find a simple, unopinionated, framework-and-storage-agnostic model layer for Node that also offers object property syntax.
 
-## yet to come:
-
-- drivers for storage integration, with key management
-- API for above (`model.put()`/`model.get()`/`model.del()`, etc.)
+## in progress:
+- set adapter by name, with fallbacks if not found
+- collections
+- queries
 - required and indexed properties
-
+- adapters: google cloud datastore, redis, mongodb, postgresql
