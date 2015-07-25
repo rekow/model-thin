@@ -37,11 +37,7 @@ var Model = function (props) {
   this._mid = null;
 
   if (props) {
-    for (var key in props) {
-      if (props.hasOwnProperty(key)) {
-        this[key] = props[key];
-      }
-    }
+    this.set(props);
   }
 };
 
@@ -185,6 +181,25 @@ Model.prototype.put = function () {
   } else {
     console.warn('[model-thin] No storage specified for kind ' + this.kind + '.')
   }
+};
+
+/**
+ * @param {(Object.<string, ?>|string)} prop
+ * @param {?=} value
+ * @return {Model}
+ */
+Model.prototype.set = function (prop, value) {
+  if (value === undefined) {
+    for (var key in prop) {
+      if (prop.hasOwnProperty(key)) {
+        this.set(k, prop[key]);
+      }
+    }
+  } else {
+    this[prop] = value;
+  }
+
+  return this;
 };
 
 /**
