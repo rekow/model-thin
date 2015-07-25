@@ -131,7 +131,7 @@ Model.isSubclass = function (cls) {
 
 /**
  * @static
- * @param {Adapter=} adapter
+ * @param {Adapter} adapter
  * @this {function(new:Model)}
  * @TODO handle adapter name instead of just implemented adapter
  */

@@ -91,15 +91,15 @@ var daughter = new Person({
 
 ### storing models
 
-Interacting with storage is abstracted into a common-sense set of async methods on every `Model` instance:
+Interacting with storage is abstracted into a common-sense set of async methods on every `Model` instance which proxy to an underlying storage adapter:
 
 - `model.get(callback)`
 - `model.put([callback])`
 - `model.del([callback])`
 
-Callbacks will be invoked with the server response after a successful or failed operation. Callback params should follow the idiomatic `(err, model)` schema.
+Callbacks will be invoked with the server response after a successful or failed operation. Callback params should follow the idiomatic `(err, response)` schema.
 
-Persistence is handled via an extensible storage adapter system and can be configured globally:
+Persistence is configured via the extensible storage adapter system and can be configured globally:
 
 ```javascript
 // Sets the adapter for all model types
@@ -113,7 +113,7 @@ or at the level of individual subclasses:
 Person.useAdapter(adapter);
 ```
 
-A storage adapter is any object that fulfills the [`Adapter` interface](https://github.com/davidrekow/model-thin/blob/master/src/adapter.js#L9), and should handle:
+A storage adapter is any object that fulfills the [`Adapter` interface](https://github.com/davidrekow/model-thin/blob/master/src/adapter.js#L6:L46), and should handle:
 
 - keying models
 - connecting and disconnecting

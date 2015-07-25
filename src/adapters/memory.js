@@ -3,16 +3,30 @@
  * @author David Rekow <d@davidrekow.com>
  */
 
-var adapter = require('../adapter'),
-  db = {};
+var db = {};
 
-module.exports = adapter('memory', {
+module.exports = {
   /**
    * @param {Model}
    * @return {string}
    */
   key: function (model) {
     return model.kind + ':' + model.id();
+  },
+
+
+  /**
+   * @param {Model}
+   * @param {function(?Error, ?Model)=} cb
+   */
+  persist: function (model, cb) {
+    if (model) {
+      db[this.key(model)] = model;
+    }
+
+    if (cb) {
+      cb();
+    }
   },
 
   /**
@@ -41,19 +55,5 @@ module.exports = adapter('memory', {
     }
 
     cb(null, db[modelOrKey]);
-  },
-
-  /**
-   * @param {Model}
-   * @param {function(?Error, ?Model)=} cb
-   */
-  persist: function (model, cb) {
-    if (model) {
-      db[this.key(model)] = model;
-    }
-
-    if (cb) {
-      cb();
-    }
   }
 });

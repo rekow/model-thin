@@ -23,8 +23,8 @@
  *
  * @function
  * @name Adapter#persist
- * @param {Model}
- * @param {function(?Error, ?Model)=}
+ * @param {Model} model
+ * @param {function(?Error, ?Model)=} cb
  */
 
 /**
@@ -32,8 +32,8 @@
  *
  * @function
  * @name Adapter#remove
- * @param {(Model|string)}
- * @param {function(?Error, ?Model)=}
+ * @param {(Model|string)} modelOrKey
+ * @param {function(?Error, ?Model)=} cb
  */
 
 /**
@@ -41,8 +41,8 @@
  *
  * @function
  * @name Adapter#retrieve
- * @param {(Model|string)}
- * @param {function(?Error, ?Model)}
+ * @param {(Model|string)} modelOrKey
+ * @param {function(?Error, ?Model)} cb
  */
 
 var adapters = /** @type {Object.<string, Adapter>} */ ({});
