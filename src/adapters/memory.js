@@ -8,6 +8,11 @@ var db = {},
 
 module.exports = {
   /**
+   * @type {boolean}
+   */
+  configured: true,
+
+  /**
    * @param {Model}
    * @return {string}
    */
@@ -63,4 +68,4 @@ module.exports = {
 
     cb(null, db[modelOrKey]);
   }
-});
+};

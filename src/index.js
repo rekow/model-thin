@@ -156,11 +156,14 @@ Model.prototype.id = function (newId) {
   return this._mid;
 };
 
-Model.prototype.del = function () {
-  if (this.adapter) {
-    this.adapter.remove(this);
+/**
+ * @param {function(Error=)} cb
+ */
+Model.prototype.del = function (cb) {
+  if (this.adapter && this.adapter.configured) {
+    this.adapter.remove(this, cb);
   } else {
-    console.warn('[model-thin] No storage specified for kind ' + this.kind + '.')
+    console.warn('[model-thin] Storage adapter not ready for ' + this.kind + '.')
   }
 };
 
@@ -168,18 +171,21 @@ Model.prototype.del = function () {
  * @param {function(?Error, ?Model)} cb
  */
 Model.prototype.get = function (cb) {
-  if (this.adapter) {
+  if (this.adapter && this.adapter.configured) {
     this.adapter.retrieve(this, cb);
   } else {
-    cb(new Error('No storage specified for kind ' + this.kind + '.'));
+    cb(new Error('Storage adapter not ready for ' + this.kind + '.'));
   }
 };
 
-Model.prototype.put = function () {
-  if (this.adapter && this.validate()) {
-    this.adapter.persist(this);
+/**
+ * @param {function(Error=)} cb
+ */
+Model.prototype.put = function (cb) {
+  if (this.adapter && this.adapter.configured && this.validate()) {
+    this.adapter.persist(this, cb);
   } else {
-    console.warn('[model-thin] No storage specified for kind ' + this.kind + '.')
+    console.warn('[model-thin] Storage adapter not ready for ' + this.kind + '.')
   }
 };
 
@@ -192,7 +198,7 @@ Model.prototype.set = function (prop, value) {
   if (value === undefined) {
     for (var key in prop) {
       if (prop.hasOwnProperty(key)) {
-        this.set(k, prop[key]);
+        this.set(key, prop[key]);
       }
     }
   } else {
