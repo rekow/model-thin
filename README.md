@@ -20,7 +20,7 @@ install with `npm install model-thin`, or add to your project dependencies:
 
 ```json
 dependencies: {
-  "model-thin": "^0.1.7"
+  "model-thin": "^0.2.0"
 }
 ```
 
@@ -136,14 +136,14 @@ This method will handle building model classes out of any result set returned (u
 
 Though much of the query work will be done elsewhere, there is a suggested [`Query` interface](https://github.com/davidrekow/model-thin/blob/master/src/query.js) for the `queryOpts`, that is lightweight but richly configurable.
 
-A sample implementation can be found in the [in-memory](https://github.com/davidrekow/model-thin/blob/master/src/adapters/memory.js) adapter.
+A sample implementation can be found in the [in-memory](https://github.com/davidrekow/model-thin/blob/master/src/adapters/memory.js#L80:L122) adapter.
 
 ## why?
 
 Because it's seemingly impossible to find a simple, unopinionated, framework-and-storage-agnostic model layer for Node that also offers object property syntax.
 
 ## in progress:
-- collections & queries
+- collections
 - required and index-aware properties
 - validations
 - adapters: google cloud datastore, redis, mongodb, postgresql
