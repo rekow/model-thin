@@ -70,6 +70,7 @@ Model.create = function (kind, properties, parent) {
 
   ctor.defineProperty = Model.defineProperty;
   ctor.useAdapter = Model.useAdapter;
+  ctor.find = Model.find;
 
   for (var key in properties) {
     if (properties.hasOwnProperty(key)) {
@@ -106,6 +107,32 @@ Model.defineProperty = function (name, type) {
   });
 
   this.prototype.props[name] = type;
+};
+
+/**
+ * @static
+ * @param {Object} queryOpts
+ * @param {function(Array.<Model>)} cb
+ * @this {function(new:Model)}
+ */
+Model.find = function (queryOpts, cb) {
+  var cls = this;
+
+  queryOpts.kind = this.prototype.kind
+
+  if (this.prototype.adapter && this.prototype.adapter.configured) {
+    this.prototype.adapter.query(queryOpts, function (err, models) {
+      if (err) {
+        return cb(err);
+      }
+
+      cb(models.map(function (data) {
+        return new cls(data);
+      }));
+    });
+  } else {
+    console.warn('[model-thin] Storage adapter not ready for ' + this.kind + '.')
+  }
 };
 
 /**

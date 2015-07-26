@@ -48,6 +48,15 @@
  * @param {function(?Error, ?Model=)} cb
  */
 
+/**
+ * Performs a query via the underlying storage adapter with passed options.
+ *
+ * @function Adapter#query
+ * @param {Query} queryOpts
+ * @param {function(?Error, ?=)} cb
+ */
+
+
 var adapters = /** @type {Object.<string, Adapter>} */ ({});
 
 /**

@@ -20,7 +20,7 @@ install with `npm install model-thin`, or add to your project dependencies:
 
 ```json
 dependencies: {
-  "model-thin": "^0.1.6"
+  "model-thin": "^0.1.7"
 }
 ```
 
@@ -113,25 +113,37 @@ or at the level of individual subclasses:
 Person.useAdapter(adapter);
 ```
 
-A storage adapter is any object that fulfills the [`Adapter` interface](https://github.com/davidrekow/model-thin/blob/master/src/adapter.js#L6:L42), and should handle:
+A storage adapter is any object that fulfills the [`Adapter` interface](https://github.com/davidrekow/model-thin/blob/master/src/adapter.js#L6:L57), and should handle:
 
 - keying models
 - connecting and disconnecting
-- CRUD
-- querying (not yet supported)
+- CRUD operations
+- querying by kind
 
 Custom storage adapters should ideally be published as a separate NPM module with the naming schema `model-thin-<db>`, so they can be managed as package-level dependencies.
 
-The [in-memory](https://github.com/davidrekow/model-thin/blob/master/src/adapters/memory.js) adapter is the only built-in storage provided, and is selected by default.
+The [in-memory](https://github.com/davidrekow/model-thin/blob/master/src/adapters/memory.js) adapter is currently the only built-in storage provided, and is selected by default.
+
+### querying models
+
+Querying is provided through a single static method, available for kinded querying on all model classes:
+
+```javascript
+Model.find(queryOpts, callback);
+```
+
+This method will handle building model classes out of any result set returned, but much of the heavy lifting for querying is expected to be accomplished by the selected storage adapter, which receives the `queryOpts` object with the Model kind added. The `callback` should expect any error as the first param, and a list of models as the second, of the kind the query was invoked on.
+
+Though much of the query work will be done elsewhere, there is a suggested [`Query` interface](https://github.com/davidrekow/model-thin/blob/master/src/query.js) for the `queryOpts`, that strives to be lightweight yet offer rich query configuration.
 
 ## why?
 
 Because it's seemingly impossible to find a simple, unopinionated, framework-and-storage-agnostic model layer for Node that also offers object property syntax.
 
 ## in progress:
-- set adapter by name with fallbacks if not found (currently keeps default and warns in console)
-- collections
-- queries
-- required and indexed properties
+- collections & queries
+- required and index-aware properties
 - validations
 - adapters: google cloud datastore, redis, mongodb, postgresql
+- adapter fallbacks if not found (currently keeps default and warns in console)
+- promise interface, probably
