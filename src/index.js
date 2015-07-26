@@ -111,12 +111,17 @@ Model.defineProperty = function (name, type) {
 
 /**
  * @static
- * @param {Object} queryOpts
- * @param {function(Array.<Model>)} cb
+ * @param {(Object|function(Array.<Model>))} queryOpts
+ * @param {function(Array.<Model>)=} cb
  * @this {function(new:Model)}
  */
 Model.find = function (queryOpts, cb) {
   var cls = this;
+
+  if (typeof queryOpts === 'function') {
+    cb = queryOpts;
+    queryOpts = {};
+  }
 
   queryOpts.kind = this.prototype.kind
 
@@ -126,9 +131,7 @@ Model.find = function (queryOpts, cb) {
         return cb(err);
       }
 
-      cb(models.map(function (data) {
-        return new cls(data);
-      }));
+      cb(null, models);
     });
   } else {
     console.warn('[model-thin] Storage adapter not ready for ' + this.kind + '.')

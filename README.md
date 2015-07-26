@@ -132,9 +132,11 @@ Querying is provided through a single static method, available for kinded queryi
 Model.find(queryOpts, callback);
 ```
 
-This method will handle building model classes out of any result set returned, but much of the heavy lifting for querying is expected to be accomplished by the selected storage adapter, which receives the `queryOpts` object with the Model kind added. The `callback` should expect any error as the first param, and a list of models as the second, of the kind the query was invoked on.
+This method will handle building model classes out of any result set returned (unless the query contains a property select), but much of the heavy lifting is expected to be accomplished by the selected storage adapter, which receives the `queryOpts` object with the Model `kind` added. The `callback` should expect any error as the first param, and a list of results as the second.
 
-Though much of the query work will be done elsewhere, there is a suggested [`Query` interface](https://github.com/davidrekow/model-thin/blob/master/src/query.js) for the `queryOpts`, that strives to be lightweight yet offer rich query configuration.
+Though much of the query work will be done elsewhere, there is a suggested [`Query` interface](https://github.com/davidrekow/model-thin/blob/master/src/query.js) for the `queryOpts`, that is lightweight but richly configurable.
+
+A sample implementation can be found in the [in-memory](https://github.com/davidrekow/model-thin/blob/master/src/adapters/memory.js) adapter.
 
 ## why?
 

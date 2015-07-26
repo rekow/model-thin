@@ -38,7 +38,7 @@
  */
 
 /**
- * Aggregate results by property.
+ * Group aggregate results by property.
  *
  * @name Query#groupBy
  * @type {(string|Array.<string>)=}
