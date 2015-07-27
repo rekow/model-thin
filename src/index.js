@@ -247,6 +247,14 @@ Model.prototype.validate = function () {
   return true;
 };
 
-Model.useAdapter(require('./adapters/memory')); // Use in-memory adapter by default.
+/**
+ * Expose the in-memory adapter.
+ */
+Model.adapters('memory', require('./adapters/memory'));
+
+/**
+ * Select the in-memory adapter by default for all Model types.
+ */
+Model.useAdapter('memory');
 
 module.exports = Model;

@@ -10,6 +10,13 @@
  */
 
 /**
+ * Whether the adapter has been configured (should be set by {@link Adapter#configure}).
+ *
+ * @name Adapter#configured
+ * @type {boolean}
+ */
+
+/**
  * Configures the current Adapter with a passed config object.
  *
  * @function Adapter#configure

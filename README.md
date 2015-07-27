@@ -113,12 +113,21 @@ or at the level of individual subclasses:
 Person.useAdapter(adapter);
 ```
 
+#### <a name="adapters"></a>storage adapters
+
 A storage adapter is any object that fulfills the [`Adapter` interface](https://github.com/davidrekow/model-thin/blob/master/src/adapter.js#L6:L57), and should handle:
 
 - keying models
+- configuration
 - connecting and disconnecting
 - CRUD operations
 - querying by kind
+
+Adapters can be used anonymously by passing the adapter itself to `useAdapter()`, or they can be registered for [use by name](https://github.com/davidrekow/model-thin/blob/master/src/index.js#L250:L258):
+
+```javascript
+Model.adapters('adapter-name', adapter);
+```
 
 Custom storage adapters should ideally be published as a separate NPM module with the naming schema `model-thin-<db>`, so they can be managed as package-level dependencies.
 
@@ -140,7 +149,7 @@ This method will handle building model classes out of any result set returned (u
 
 Though much of the query work will be done elsewhere, there is a suggested [`Query` interface](https://github.com/davidrekow/model-thin/blob/master/src/query.js) for the `queryOpts`, that is lightweight but richly configurable.
 
-A sample implementation can be found in the [in-memory](https://github.com/davidrekow/model-thin/blob/master/src/adapters/memory.js#L80:L122) adapter, while samples of its usage are in the [example](https://github.com/davidrekow/model-thin/blob/master/example.js#L75:L91) code.
+A sample implementation can be found in the [gcloud-datastore](https://github.com/davidrekow/model-thin-gcloud-datastore/blob/master/index.js#L107:L172) adapter , while samples of its usage are in the [example](https://github.com/davidrekow/model-thin/blob/master/example.js#L75:L91) code.
 
 ## why?
 
