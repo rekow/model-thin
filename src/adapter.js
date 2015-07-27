@@ -63,6 +63,15 @@
  * @param {function(?Error, ?=)} cb
  */
 
+/**
+ * Converts a raw server entity response to a fully-populated model.
+ *
+ * @function Adapter#toModel
+ * @param {Object} entity
+ * @param {function(new:model)} kind
+ * @return {Model}
+ */
+
 
 var adapters = /** @type {Object.<string, Adapter>} */ ({});
 

@@ -124,15 +124,21 @@ Model.find = function (queryOpts, cb) {
     queryOpts = {};
   }
 
-  queryOpts.kind = this;
+  queryOpts.kind = this.kind;
 
   if (this.prototype.adapter && this.prototype.adapter.configured) {
-    this.prototype.adapter.query(queryOpts, function (err, models) {
+    this.prototype.adapter.query(queryOpts, function (err, entities, cursor) {
       if (err) {
         return cb(err);
       }
 
-      cb(null, models);
+      if (!queryOpts.select) {
+        entities = entities.map(function (entity) {
+          return cls.prototype.adapter.toModel(entity, cls);
+        });
+      }
+
+      cb(null, entities, cursor);
     });
   } else {
     console.warn('[model-thin] Storage adapter not ready for ' + this.kind + '.')

@@ -123,5 +123,14 @@ module.exports = {
     }
 
     cb(null, results);
+  },
+
+  /**
+   * @param {Object} entity
+   * @param {function(new:model)} kind
+   * @return {Model}
+   */
+  toModel: function (entity, kind) {
+    return entity;
   }
 };

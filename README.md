@@ -20,7 +20,7 @@ install with `npm install model-thin`, or add to your project dependencies:
 
 ```json
 dependencies: {
-  "model-thin": "^0.3.1"
+  "model-thin": "^0.4.0"
 }
 ```
 
@@ -117,9 +117,10 @@ Person.useAdapter(adapter);
 
 A storage adapter is any object that fulfills the [`Adapter` interface](https://github.com/davidrekow/model-thin/blob/master/src/adapter.js#L6:L57), and should handle:
 
-- keying models
 - configuration
 - connecting and disconnecting
+- keying models
+- converting models from responses
 - CRUD operations
 - querying by kind
 
@@ -145,9 +146,9 @@ Querying is provided through a single static method, available for kinded queryi
 Model.find(queryOpts, callback);
 ```
 
-This method will handle building model classes out of any result set returned (unless the query contains a property select), but much of the heavy lifting is expected to be accomplished by the selected storage adapter, which receives the `queryOpts` object with the Model `kind` added. The `callback` should expect any error as the first param, and a list of results as the second.
+This method will handle building model classes out of any result set returned (unless the query contains a property select), by calling the adapter's `toModel()` method. All other heavy lifting is expected to be accomplished by the selected storage adapter, which receives the `queryOpts` object with the Model `kind` added. The `callback` should expect any error as the first param, and a list of results as the second. If the adapter supports query cursors, they will be passed through as the third parameter.
 
-Though much of the query work will be done elsewhere, there is a suggested [`Query` interface](https://github.com/davidrekow/model-thin/blob/master/src/query.js) for the `queryOpts`, that is lightweight but richly configurable.
+There is a suggested [`Query` interface](https://github.com/davidrekow/model-thin/blob/master/src/query.js) for the `queryOpts` that is lightweight but richly configurable.
 
 A sample implementation can be found in the [gcloud-datastore](https://github.com/davidrekow/model-thin-gcloud-datastore/blob/master/index.js#L107:L172) adapter , while samples of its usage are in the [example](https://github.com/davidrekow/model-thin/blob/master/example.js#L75:L91) code.
 
