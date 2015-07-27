@@ -123,7 +123,7 @@ Model.find = function (queryOpts, cb) {
     queryOpts = {};
   }
 
-  queryOpts.kind = this.prototype.kind
+  queryOpts.kind = this;
 
   if (this.prototype.adapter && this.prototype.adapter.configured) {
     this.prototype.adapter.query(queryOpts, function (err, models) {

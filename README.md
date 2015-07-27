@@ -20,7 +20,7 @@ install with `npm install model-thin`, or add to your project dependencies:
 
 ```json
 dependencies: {
-  "model-thin": "^0.2.1"
+  "model-thin": "^0.3.0"
 }
 ```
 
