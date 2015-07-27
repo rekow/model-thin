@@ -48,7 +48,7 @@
  * Specify cursor tokens for start and/or end of the result set.
  *
  * @name Query#cursor
- * @type {Object.<{start: (string|number), end: (string|number)}>=}
+ * @type {Object.<{start: (string|number)=, end: (string|number)=}>=}
  */
 
 /**
@@ -56,4 +56,11 @@
  *
  * @name Query#filter
  * @type {(Object|Array.<Object>)=}
+ */
+
+/**
+ * The model class this query was called on (automatically populated).
+ *
+ * @name Query#kind
+ * @type {function(new:Model)}
  */

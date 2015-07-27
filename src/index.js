@@ -71,6 +71,7 @@ Model.create = function (kind, properties, parent) {
   ctor.defineProperty = Model.defineProperty;
   ctor.useAdapter = Model.useAdapter;
   ctor.find = Model.find;
+  ctor.kind = kind;
 
   for (var key in properties) {
     if (properties.hasOwnProperty(key)) {
