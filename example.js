@@ -79,7 +79,7 @@ function runExample () {
   }, handleQuery('just one result'));
 
   Person.find({
-    select: ['name']
+    select: 'name'
   }, handleQuery('select names only'));
 
   Person.find({

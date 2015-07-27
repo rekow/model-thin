@@ -40,7 +40,7 @@
 /**
  * Group aggregate results by property.
  *
- * @name Query#groupBy
+ * @name Query#group
  * @type {(string|Array.<string>)=}
  */
 
@@ -52,8 +52,8 @@
  */
 
 /**
- * Provide a list of filters to apply to the query in order.
+ * Provide a map or list of filters to apply to the query.
  *
  * @name Query#filter
- * @type {Array.<Object>=}
+ * @type {(Object|Array.<Object>)=}
  */

@@ -75,7 +75,7 @@ module.exports = {
    *
    * @param {Query} queryOpts
    * @param {function(?Error, Array.<Object>)} cb
-   * @TODO sort, groupBy
+   * @TODO sort, group
    */
   query: function (queryOpts, cb) {
     var results = [],
@@ -85,6 +85,10 @@ module.exports = {
       offset = queryOpts.offset || 0,
       kindPrefix = new RegExp('^' + queryOpts.kind + ':'),
       item, i, filtered, result, selected;
+
+    if (typeof select === 'string') {
+      select = [select];
+    }
 
     try {
       for (var k in db) {

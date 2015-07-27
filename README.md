@@ -20,7 +20,7 @@ install with `npm install model-thin`, or add to your project dependencies:
 
 ```json
 dependencies: {
-  "model-thin": "^0.2.0"
+  "model-thin": "^0.2.1"
 }
 ```
 
@@ -122,7 +122,11 @@ A storage adapter is any object that fulfills the [`Adapter` interface](https://
 
 Custom storage adapters should ideally be published as a separate NPM module with the naming schema `model-thin-<db>`, so they can be managed as package-level dependencies.
 
-The [in-memory](https://github.com/davidrekow/model-thin/blob/master/src/adapters/memory.js) adapter is currently the only built-in storage provided, and is selected by default.
+The [in-memory](https://github.com/davidrekow/model-thin/blob/master/src/adapters/memory.js) adapter is the only built-in storage provided, and is selected by default.
+
+Available adapters:
+
+- [Google Cloud Datastore](https://www.npmjs.com/package/model-thin-gcloud-datastore)
 
 ### querying models
 
@@ -136,7 +140,7 @@ This method will handle building model classes out of any result set returned (u
 
 Though much of the query work will be done elsewhere, there is a suggested [`Query` interface](https://github.com/davidrekow/model-thin/blob/master/src/query.js) for the `queryOpts`, that is lightweight but richly configurable.
 
-A sample implementation can be found in the [in-memory](https://github.com/davidrekow/model-thin/blob/master/src/adapters/memory.js#L80:L122) adapter.
+A sample implementation can be found in the [in-memory](https://github.com/davidrekow/model-thin/blob/master/src/adapters/memory.js#L80:L122) adapter, while samples of its usage are in the [example](https://github.com/davidrekow/model-thin/blob/master/example.js#L75:L91) code.
 
 ## why?
 
@@ -144,8 +148,8 @@ Because it's seemingly impossible to find a simple, unopinionated, framework-and
 
 ## in progress:
 - collections
+- transactions
 - required and index-aware properties
 - validations
-- adapters: google cloud datastore, redis, mongodb, postgresql
-- adapter fallbacks if not found (currently keeps default and warns in console)
+- adapters: redis, mongodb, postgresql
 - promise interface, probably
