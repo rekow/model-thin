@@ -68,7 +68,7 @@
  *
  * @function Adapter#toModel
  * @param {Object} entity
- * @param {function(new:model)} kind
+ * @param {function(new:Model)} kind
  * @return {Model}
  */
 

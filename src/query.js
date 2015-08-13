@@ -59,8 +59,8 @@
  */
 
 /**
- * The model class this query was called on (automatically populated).
+ * The model class name this query was called on (automatically populated).
  *
  * @name Query#kind
- * @type {function(new:Model)}
+ * @type {string}
  */

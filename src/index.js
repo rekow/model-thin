@@ -36,6 +36,12 @@ var Model = function (props) {
    */
   this._mid = null;
 
+  /**
+   * @private
+   * @type {boolean}
+   */
+  this._changed = false;
+
   if (props) {
     this.set(props);
   }
@@ -103,6 +109,7 @@ Model.defineProperty = function (name, type) {
         console.warn('[model-thin]: Tried to set invalid property type for %s, ignoring.', name);
       } else {
         this._prop[name] = val;
+        this._changed = true;
       };
     }
   });
