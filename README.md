@@ -1,6 +1,8 @@
 # model-thin
 A super-skinny model layer, with simple object property syntax and type validation.
 
+[![Build Status](https://travis-ci.org/davidrekow/model-thin.svg?branch=master)](https://travis-ci.org/davidrekow/model-thin) [![Coverage Status](https://coveralls.io/repos/davidrekow/model-thin/badge.svg?branch=master&service=github)](https://coveralls.io/github/davidrekow/model-thin?branch=master)
+
 Supported types:
 
 - `String`
