@@ -12,6 +12,8 @@ Supported types:
 - `Model` subclasses
 - `null` (indicates a deleted property)
 
+Unless a property is marked `required`, all types are nullable.
+
 Still in early development.
 
 ## installation
@@ -50,6 +52,15 @@ var Person = Model.create('Person', {
 `properties` is a map of property names to types (constructors). `properties` can also define methods, declared as a function that isn't one of the supported type constructors. Methods are exposed on the prototype of the new model class.
 
 The optional `parent` param will be ignored if it isn't a subclass of `Model`.
+
+To provide meta property information use the extended property specification syntax:
+
+```javascript
+// Inherits `age` property & `greet` method by passing Person as parent
+var NamedPerson = Model.create('NamedPerson', {
+  name: { type: String, required: true, indexed: true }
+}, Person);
+```
 
 Properties can also be defined after the class is constructed - this method is required for any self-referential model types:
 
@@ -163,8 +174,6 @@ Because it's models, for javascript™ (lol). If you're looking for ActiveRecord
 ## in progress/todo:
 - collections
 - transactions
-- required and index-aware properties
-- validations
 - adapters: redis, mongodb, postgresql
 - streaming interface
 - schema management?

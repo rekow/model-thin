@@ -95,8 +95,22 @@ Model.create = function (kind, properties, parent) {
  * @this {function(new:Model)}
  */
 Model.defineProperty = function (name, type) {
+  var spec;
+
   if (isMethod(type)) {
     return this.prototype[name] = type;
+  }
+
+  spec = {};
+
+  if (typeof type === "object") {
+    spec.required = !!type.required;
+    spec.indexed = !!type.indexed;
+    spec.type = type.type;
+  } else {
+    spec.required = false;
+    spec.indexed = false;
+    spec.type = type;
   }
 
   Object.defineProperty(this.prototype, name, {
@@ -105,7 +119,7 @@ Model.defineProperty = function (name, type) {
       return this._prop[name];
     },
     set: function (val) {
-      if (val !== null && val.constructor !== this.props[name]) {
+      if (val !== null && val.constructor !== this.props[name].type) {
         console.warn('[model-thin]: Tried to set invalid property type for %s, ignoring.', name);
       } else {
         this._prop[name] = val;
@@ -114,7 +128,7 @@ Model.defineProperty = function (name, type) {
     }
   });
 
-  this.prototype.props[name] = type;
+  this.prototype.props[name] = spec;
 };
 
 /**
@@ -189,6 +203,25 @@ Model.useAdapter = function (adapter) {
 };
 
 /**
+ * @static
+ * @param {Model} model
+ * @return {boolean}
+ */
+Model.validate = function (model) {
+  var spec;
+
+  for (var prop in model.constructor.props) {
+    spec = model.constructor.props[prop];
+
+    if (spec.required === true && model[prop] == null) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+/**
  * @param {(number|string)=} newId
  * @return {?(number|string)}
  */
@@ -254,10 +287,9 @@ Model.prototype.set = function (prop, value) {
 
 /**
  * @return {boolean}
- * @TODO model-level validations (required, indexed etc).
  */
 Model.prototype.validate = function () {
-  return true;
+  return Model.validate(this);
 };
 
 /**
