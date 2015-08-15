@@ -1,0 +1,7 @@
+verbose: false
+reporting:
+    print: summary
+    reports:
+        - lcovonly
+        - json
+    dir: ./test/coverage
