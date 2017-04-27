@@ -8,22 +8,27 @@ SHELL := /bin/bash
 # vars
 THIS_DIR := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 COVERAGE_DIR := $(THIS_DIR)/test/coverage
+DIST_DIR := $(THIS_DIR)/dist
 
 LIB_NAME := "model-thin"
 
 .PHONY: all build clean distclean test test-ci
 
-all: test
+all: build
+
+build: $(THIS_DIR)/node_modules $(DIST_DIR)
+	@echo "Bundling $(LIB_NAME) for the browser..."
+	@$(THIS_DIR)/node_modules/.bin/webpack $(THIS_DIR)/src/index.js $(THIS_DIR)/dist/model-thin.bundle.js
 
 clean:
-	@-echo "Cleaning built files..."
-	@-rm -rf $(THIS_DIR)/dist
+	@echo "Cleaning downloaded dependencies..."
+	@-rm -rf $(THIS_DIR)/node_modules
 	@-echo "Cleaning test reports..."
 	@-rm -rf $(COVERAGE_DIR)
 
 distclean: clean
-	@echo "Cleaning downloaded dependencies..."
-	@-rm -rf $(THIS_DIR)/node_modules
+	@-echo "Cleaning built files..."
+	@-rm -rf $(DIST_DIR)
 
 test: $(THIS_DIR)/node_modules $(COVERAGE_DIR)
 	@echo "Running $(LIB_NAME) package tests..."
@@ -41,3 +46,7 @@ $(THIS_DIR)/node_modules:
 $(COVERAGE_DIR):
 	@echo "Creating test report directories..."
 	@mkdir -p $(COVERAGE_DIR)
+
+$(DIST_DIR):
+	@echo "Creating build distribution directories..."
+	@mkdir -p $(DIST_DIR)

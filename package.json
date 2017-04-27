@@ -1,6 +1,6 @@
 {
   "name": "model-thin",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "description": "A super-slim model layer.",
   "keywords": [
     "model",
@@ -27,6 +27,7 @@
     "mocha": "~2.2.5",
     "mocha-multi": "~0.7.1",
     "istanbul": "~0.3.17",
-    "coveralls": "~2.11.3"
+    "coveralls": "~2.11.3",
+    "webpack": "^2.3.3"
   }
 }
